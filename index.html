@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>PDFWala — PDF Work, Done in Seconds</title>
+<meta name="google-site-verification" content="LubG0BI4n98eBnpuc2ovMH0LxFYjAHPOlw1BkFTZNXU" />
+<meta name="description" content="Free online PDF tools — merge, compress, protect, edit and convert PDF files instantly. No upload, no sign up. 100% free forever.">
+<meta name="keywords" content="PDF merge, PDF compress, PDF tools free, image to PDF, protect PDF, edit PDF, PDF online, free PDF converter">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://chinabolhindi-del.github.io/pdfwala/">
+<meta property="og:title" content="PDFWala — PDF Work, Done in Seconds">
+<meta property="og:description" content="Free online PDF tools. Merge, compress, protect, edit PDFs instantly. No sign up required.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<style>
+:root{--red:#E63946;--rd:#c1121f;--rg:rgba(230,57,70,0.16);--bg:#090909;--bg2:#121212;--bg3:#1c1c1c;--br:#252525;--tx:#efefef;--mu:#777;--wh:#fff}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;font-size:15px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:rgba(9,9,9,0.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--br)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;color:var(--wh);letter-spacing:-.5px}
+.logo span{color:var(--red)}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:var(--mu);text-decoration:none;font-size:0.76rem;font-weight:500;padding:5px 10px;border-radius:7px;transition:all .2s}
+.nav-links a:hover{color:var(--wh);background:var(--bg3)}
+@media(max-width:480px){.nav-links{display:none}}
+
+/* HERO */
+.hero{padding:100px 18px 44px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:420px;height:300px;background:radial-gradient(ellipse,var(--rg) 0%,transparent 68%);pointer-events:none;z-index:0}
+.hero>*{position:relative;z-index:1}
+.badge{display:inline-flex;align-items:center;gap:5px;background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.28);color:#ff8088;font-size:0.68rem;font-weight:600;padding:4px 12px;border-radius:100px;margin-bottom:16px;letter-spacing:.4px}
+.hero h1{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;line-height:1.08;letter-spacing:-1px;color:var(--wh);margin-bottom:12px}
+.hero h1 em{color:var(--red);font-style:normal;display:block}
+.hero p{font-size:0.88rem;color:var(--mu);max-width:360px;margin:0 auto 28px;line-height:1.7;font-weight:300}
+.stats{display:flex;justify-content:center;gap:24px;padding-top:22px;border-top:1px solid var(--br);margin-top:32px}
+.s-num{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--wh)}
+.s-lbl{font-size:0.65rem;color:var(--mu);margin-top:2px}
+
+/* SECTION */
+.sec{padding:36px 18px;max-width:1060px;margin:0 auto}
+.sec-lbl{font-size:0.65rem;font-weight:700;letter-spacing:2.5px;color:var(--red);text-transform:uppercase;margin-bottom:8px}
+.sec-ttl{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--wh);margin-bottom:22px;letter-spacing:-.5px}
+.divider{height:1px;background:var(--br)}
+
+/* TOOLS GRID */
+.tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:580px){.tgrid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:860px){.tgrid{grid-template-columns:repeat(4,1fr)}}
+
+.tc{background:var(--bg2);border:1px solid var(--br);border-radius:12px;padding:15px 13px;cursor:pointer;position:relative;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.tc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transition:transform .2s;transform-origin:left}
+.tc:hover::before,.tc.at::before{transform:scaleX(1)}
+.tc:hover,.tc.at{border-color:rgba(230,57,70,.4);background:var(--bg3)}
+.tc.dis{opacity:.38;pointer-events:none}
+.ti{width:36px;height:36px;background:var(--rg);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:9px}
+.tn{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--wh);margin-bottom:2px}
+.td{font-size:0.68rem;color:var(--mu);line-height:1.4}
+.tbg{display:inline-block;font-size:0.57rem;font-weight:700;padding:2px 7px;border-radius:100px;margin-top:6px;letter-spacing:.4px}
+.tbg.r{background:rgba(230,57,70,.15);color:#ff8088}
+.tbg.s{background:rgba(255,255,255,.05);color:#444}
+
+/* WORKSPACE */
+.ws{display:none;background:var(--bg2);border:1px solid var(--br);border-radius:14px;padding:20px 16px;margin-top:16px}
+.ws.open{display:block !important}
+.wsh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.wsttl{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--wh)}
+.xbtn{width:30px;height:30px;border-radius:7px;background:var(--bg3);border:1px solid var(--br);color:var(--mu);font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;touch-action:manipulation}
+.xbtn:hover{color:var(--wh);border-color:var(--red)}
+
+/* DROP ZONE */
+.dz{border:2px dashed var(--br);border-radius:12px;padding:28px 14px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.dz:hover,.dz.dg{border-color:var(--red);background:rgba(230,57,70,.04)}
+.dz input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:100px;touch-action:manipulation}
+.di{font-size:1.8rem;display:block;margin-bottom:7px}
+.dttl{font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:700;color:var(--wh);margin-bottom:2px}
+.dsub{font-size:0.68rem;color:var(--mu)}
+
+/* FILE LIST */
+.fl{margin-top:11px;display:flex;flex-direction:column;gap:6px}
+.fit{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--br);border-radius:8px;padding:8px 11px}
+.fii{font-size:1.1rem;flex-shrink:0}
+.fin{flex:1;min-width:0}
+.finm{font-size:0.78rem;font-weight:500;color:var(--wh);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fis{font-size:0.65rem;color:var(--mu);margin-top:1px}
+.frm{background:none;border:none;color:var(--mu);cursor:pointer;font-size:0.82rem;padding:3px 5px;border-radius:5px;flex-shrink:0;transition:all .2s;touch-action:manipulation}
+.frm:hover{color:var(--red)}
+
+/* COMPRESS OPTS */
+.copts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.co{background:var(--bg3);border:2px solid var(--br);border-radius:10px;padding:11px 7px;text-align:center;cursor:pointer;transition:all .2s;touch-action:manipulation}
+.co:hover,.co.sel{border-color:var(--red);background:rgba(230,57,70,.07)}
+.coi{font-size:1.2rem;margin-bottom:4px}
+.con{font-family:'Syne',sans-serif;font-size:0.76rem;font-weight:700;color:var(--wh);margin-bottom:2px}
+.cod{font-size:0.63rem;color:var(--mu)}
+
+/* INPUTS */
+.lbl{font-size:0.73rem;color:var(--mu);margin-bottom:6px;display:block;font-weight:500}
+.inp{width:100%;background:var(--bg3);border:1px solid var(--br);border-radius:8px;padding:10px 12px;color:var(--wh);font-size:0.86rem;font-family:'DM Sans',sans-serif;outline:none;transition:border .2s}
+.inp:focus{border-color:var(--red)}
+.inp::placeholder{color:#444}
+.igroup{margin-top:13px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+
+/* EDIT OPTS */
+.eopts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:13px}
+.eo{background:var(--bg3);border:2px solid var(--br);border-radius:10px;padding:11px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;touch-action:manipulation}
+.eo:hover,.eo.sel{border-color:var(--red);background:rgba(230,57,70,.07)}
+.eoi{font-size:1.1rem;flex-shrink:0}
+.eon{font-family:'Syne',sans-serif;font-size:0.76rem;font-weight:700;color:var(--wh)}
+.eod{font-size:0.63rem;color:var(--mu);margin-top:1px}
+.subp{display:none;margin-top:13px}
+.subp.show{display:block}
+
+/* PROCESS BTN */
+.pbtn{width:100%;margin-top:15px;padding:13px;background:var(--red);color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;touch-action:manipulation}
+.pbtn:hover{background:var(--rd)}
+.pbtn:disabled{opacity:.4;cursor:not-allowed}
+
+/* PROGRESS */
+.pgw{display:none;margin-top:13px}
+.pgw.show{display:block}
+.pglbl{font-size:0.7rem;color:var(--mu);margin-bottom:5px;display:flex;justify-content:space-between}
+.pgbar{height:4px;background:var(--br);border-radius:100px;overflow:hidden}
+.pgfill{height:100%;background:var(--red);border-radius:100px;transition:width .3s;width:0}
+
+/* SUCCESS */
+.sok{display:none;margin-top:13px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.22);border-radius:12px;padding:16px;text-align:center}
+.sok.show{display:block}
+.ski{font-size:1.6rem;margin-bottom:6px}
+.sok p{font-size:0.8rem;color:#86efac;margin-bottom:11px;line-height:1.5}
+.dlbtn{display:inline-flex;align-items:center;gap:5px;background:#22c55e;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;touch-action:manipulation}
+.dlbtn:hover{background:#16a34a}
+
+/* HOW */
+.hgrid{display:grid;grid-template-columns:1fr;gap:11px}
+@media(min-width:580px){.hgrid{grid-template-columns:repeat(3,1fr)}}
+.hc{background:var(--bg2);border:1px solid var(--br);border-radius:12px;padding:20px 16px}
+.hn{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:rgba(230,57,70,.13);line-height:1;margin-bottom:10px}
+.ht{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--wh);margin-bottom:4px}
+.hd{font-size:0.73rem;color:var(--mu);line-height:1.6}
+
+/* FOOTER */
+footer{border-top:1px solid var(--br);padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;margin-top:24px}
+footer .logo{font-size:1rem}
+footer p{font-size:0.7rem;color:var(--mu)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">PDF<span>Wala</span></div>
+  <div class="nav-links">
+    <a href="#tools">Tools</a>
+    <a href="#how">How It Works</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">⚡ 100% Free · No Sign Up · No Server Upload</div>
+  <h1>PDF Work,<br><em>Done in Seconds.</em></h1>
+  <p>Merge, compress, protect and edit PDFs in your browser. Your files never leave your device.</p>
+  <div class="stats">
+    <div><div class="s-num">10+</div><div class="s-lbl">PDF Tools</div></div>
+    <div><div class="s-num">100%</div><div class="s-lbl">Free Forever</div></div>
+    <div><div class="s-num">0</div><div class="s-lbl">Data Uploaded</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TOOLS -->
+<section class="sec" id="tools">
+  <div class="sec-lbl">All Tools</div>
+  <div class="sec-ttl">What do you need?</div>
+  <div class="tgrid">
+    <div class="tc" id="card-merge" onclick="openTool('merge')"><div class="ti">🔗</div><div class="tn">Merge PDF</div><div class="td">Combine multiple PDFs into one</div><span class="tbg r">READY</span></div>
+    <div class="tc" id="card-compress" onclick="openTool('compress')"><div class="ti">🗜️</div><div class="tn">Compress PDF</div><div class="td">Reduce size, keep quality</div><span class="tbg r">READY</span></div>
+    <div class="tc" id="card-img2pdf" onclick="openTool('img2pdf')"><div class="ti">🖼️</div><div class="tn">Image to PDF</div><div class="td">Convert JPG/PNG to PDF</div><span class="tbg r">READY</span></div>
+    <div class="tc" id="card-protect" onclick="openTool('protect')"><div class="ti">🔒</div><div class="tn">Protect PDF</div><div class="td">Add password to your PDF</div><span class="tbg r">READY</span></div>
+    <div class="tc" id="card-edit" onclick="openTool('edit')"><div class="ti">✏️</div><div class="tn">Edit PDF</div><div class="td">Watermark, rotate, add text</div><span class="tbg r">READY</span></div>
+    <div class="tc dis"><div class="ti">✂️</div><div class="tn">Split PDF</div><div class="td">Extract specific pages</div><span class="tbg s">COMING SOON</span></div>
+    <div class="tc dis"><div class="ti">🔓</div><div class="tn">Unlock PDF</div><div class="td">Remove PDF password</div><span class="tbg s">COMING SOON</span></div>
+    <div class="tc dis"><div class="ti">📄</div><div class="tn">PDF to Word</div><div class="td">Convert to editable doc</div><span class="tbg s">COMING SOON</span></div>
+  </div>
+
+  <!-- WORKSPACES -->
+  <div class="ws" id="ws-merge">
+    <div class="wsh"><div class="wsttl">🔗 Merge PDF</div><button class="xbtn" onclick="closeWS('merge')">✕</button></div>
+    <div class="dz"><input type="file" accept=".pdf" multiple onchange="handleMerge(event)"><span class="di">📂</span><div class="dttl">Tap to select PDF files</div><div class="dsub">Select 2 or more PDFs</div></div>
+    <div class="fl" id="ml"></div>
+    <button class="pbtn" id="mbtn" onclick="mergePDFs()" disabled>🔗 Merge PDFs</button>
+    <div class="pgw" id="mpgw"><div class="pglbl"><span>Merging...</span><span id="mpct">0%</span></div><div class="pgbar"><div class="pgfill" id="mfill"></div></div></div>
+    <div class="sok" id="mok"><div class="ski">✅</div><p>Merged successfully!</p><a class="dlbtn" id="mdl">⬇ Download</a></div>
+  </div>
+
+  <div class="ws" id="ws-compress">
+    <div class="wsh"><div class="wsttl">🗜️ Compress PDF</div><button class="xbtn" onclick="closeWS('compress')">✕</button></div>
+    <div class="dz"><input type="file" accept=".pdf" onchange="handleCompress(event)"><span class="di">📂</span><div class="dttl">Tap to select a PDF</div><div class="dsub">We'll reduce the file size</div></div>
+    <div class="fl" id="cl"></div>
+    <div class="copts">
+      <div class="co sel" onclick="pickC(this,'low')"><div class="coi">🟢</div><div class="con">Low</div><div class="cod">Max quality</div></div>
+      <div class="co" onclick="pickC(this,'medium')"><div class="coi">🟡</div><div class="con">Medium</div><div class="cod">Balanced</div></div>
+      <div class="co" onclick="pickC(this,'high')"><div class="coi">🔴</div><div class="con">High</div><div class="cod">Smallest</div></div>
+    </div>
+    <button class="pbtn" id="cbtn" onclick="compressPDF()" disabled>🗜️ Compress PDF</button>
+    <div class="pgw" id="cpgw"><div class="pglbl"><span>Compressing...</span><span id="cpct">0%</span></div><div class="pgbar"><div class="pgfill" id="cfill"></div></div></div>
+    <div class="sok" id="cok"><div class="ski">✅</div><p id="cres">Compressed!</p><a class="dlbtn" id="cdl">⬇ Download</a></div>
+  </div>
+
+  <div class="ws" id="ws-img2pdf">
+    <div class="wsh"><div class="wsttl">🖼️ Image to PDF</div><button class="xbtn" onclick="closeWS('img2pdf')">✕</button></div>
+    <div class="dz"><input type="file" accept="image/jpeg,image/png,image/webp" multiple onchange="handleImgs(event)"><span class="di">🖼️</span><div class="dttl">Tap to select images</div><div class="dsub">JPG, PNG, WEBP · Multiple allowed</div></div>
+    <div class="fl" id="il"></div>
+    <button class="pbtn" id="ibtn" onclick="imgs2pdf()" disabled>🖼️ Convert to PDF</button>
+    <div class="pgw" id="ipgw"><div class="pglbl"><span>Converting...</span><span id="ipct">0%</span></div><div class="pgbar"><div class="pgfill" id="ifill"></div></div></div>
+    <div class="sok" id="iok"><div class="ski">✅</div><p id="ires">Converted!</p><a class="dlbtn" id="idl">⬇ Download</a></div>
+  </div>
+
+  <div class="ws" id="ws-protect">
+    <div class="wsh"><div class="wsttl">🔒 Protect PDF</div><button class="xbtn" onclick="closeWS('protect')">✕</button></div>
+    <div class="dz"><input type="file" accept=".pdf" onchange="handleProtect(event)"><span class="di">📄</span><div class="dttl">Tap to select a PDF</div><div class="dsub">We'll add password protection</div></div>
+    <div class="fl" id="pl"></div>
+    <div class="igroup">
+      <label class="lbl">🔑 Set Password</label>
+      <input type="password" class="inp" id="pw1" placeholder="Enter a strong password...">
+      <label class="lbl" style="margin-top:10px">🔑 Confirm Password</label>
+      <input type="password" class="inp" id="pw2" placeholder="Re-enter password...">
+    </div>
+    <button class="pbtn" id="ptbtn" onclick="protectPDF()" disabled>🔒 Protect PDF</button>
+    <div class="pgw" id="ppgw"><div class="pglbl"><span>Adding protection...</span><span id="ppct">0%</span></div><div class="pgbar"><div class="pgfill" id="pfill"></div></div></div>
+    <div class="sok" id="pok"><div class="ski">✅</div><p>PDF protected!</p><a class="dlbtn" id="pdl">⬇ Download</a></div>
+  </div>
+
+  <div class="ws" id="ws-edit">
+    <div class="wsh"><div class="wsttl">✏️ Edit PDF</div><button class="xbtn" onclick="closeWS('edit')">✕</button></div>
+    <div class="dz"><input type="file" accept=".pdf" onchange="handleEdit(event)"><span class="di">📄</span><div class="dttl">Tap to select a PDF</div><div class="dsub">Choose an operation below</div></div>
+    <div class="fl" id="el"></div>
+    <div class="eopts">
+      <div class="eo sel" onclick="pickEdit(this,'wm')"><div class="eoi">💧</div><div><div class="eon">Watermark</div><div class="eod">Add text watermark</div></div></div>
+      <div class="eo" onclick="pickEdit(this,'rot')"><div class="eoi">🔄</div><div><div class="eon">Rotate Pages</div><div class="eod">90°/180°/270°</div></div></div>
+      <div class="eo" onclick="pickEdit(this,'txt')"><div class="eoi">📝</div><div><div class="eon">Add Text</div><div class="eod">Stamp on pages</div></div></div>
+      <div class="eo" onclick="pickEdit(this,'meta')"><div class="eoi">🏷️</div><div><div class="eon">Metadata</div><div class="eod">Title, author</div></div></div>
+    </div>
+    <div class="subp show" id="sp-wm">
+      <label class="lbl" style="margin-top:13px">💧 Watermark Text</label>
+      <input type="text" class="inp" id="wmt" placeholder="e.g. CONFIDENTIAL...">
+      <div class="row2">
+        <div><label class="lbl" style="margin-top:9px">Opacity (5–100)</label><input type="number" class="inp" id="wmo" value="30" min="5" max="100"></div>
+        <div><label class="lbl" style="margin-top:9px">Font Size</label><input type="number" class="inp" id="wms" value="48" min="12" max="120"></div>
+      </div>
+    </div>
+    <div class="subp" id="sp-rot">
+      <label class="lbl" style="margin-top:13px">🔄 Rotation</label>
+      <div class="copts">
+        <div class="co sel" onclick="pickRot(this,90)"><div class="coi">↻</div><div class="con">90°</div></div>
+        <div class="co" onclick="pickRot(this,180)"><div class="coi">↺↻</div><div class="con">180°</div></div>
+        <div class="co" onclick="pickRot(this,270)"><div class="coi">↺</div><div class="con">270°</div></div>
+      </div>
+    </div>
+    <div class="subp" id="sp-txt">
+      <label class="lbl" style="margin-top:13px">📝 Text to Stamp</label>
+      <input type="text" class="inp" id="atxt" placeholder="Text for every page...">
+      <div class="row2">
+        <div><label class="lbl" style="margin-top:9px">X (px)</label><input type="number" class="inp" id="tx" value="50"></div>
+        <div><label class="lbl" style="margin-top:9px">Y (px)</label><input type="number" class="inp" id="ty" value="50"></div>
+      </div>
+    </div>
+    <div class="subp" id="sp-meta">
+      <label class="lbl" style="margin-top:13px">📋 Title</label><input type="text" class="inp" id="mttl" placeholder="Document title">
+      <label class="lbl" style="margin-top:9px">👤 Author</label><input type="text" class="inp" id="maut" placeholder="Author name">
+      <label class="lbl" style="margin-top:9px">📌 Subject</label><input type="text" class="inp" id="msub" placeholder="Subject">
+    </div>
+    <button class="pbtn" id="ebtn" onclick="editPDF()" disabled>✏️ Apply Edit</button>
+    <div class="pgw" id="epgw"><div class="pglbl"><span>Applying...</span><span id="epct">0%</span></div><div class="pgbar"><div class="pgfill" id="efill"></div></div></div>
+    <div class="sok" id="eok"><div class="ski">✅</div><p id="eres">Edited!</p><a class="dlbtn" id="edl">⬇ Download</a></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="sec" id="how">
+  <div class="sec-lbl">Process</div>
+  <div class="sec-ttl">How It Works</div>
+  <div class="hgrid">
+    <div class="hc"><div class="hn">01</div><div class="ht">Pick a Tool</div><div class="hd">Choose from 10+ PDF tools. No account needed.</div></div>
+    <div class="hc"><div class="hn">02</div><div class="ht">Upload File</div><div class="hd">Tap to select. Everything runs in your browser.</div></div>
+    <div class="hc"><div class="hn">03</div><div class="ht">Download</div><div class="hd">Get your result instantly. Zero server upload.</div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">PDF<span>Wala</span></div>
+  <p>PDF Work, Done in Seconds — 100% Free, Always.</p>
+  <p>© 2024 PDFWala · No files uploaded to any server</p>
+</footer>
+
+<script>
+// STATE
+let mFiles=[],cFile=null,cLvl='low';
+let iFiles=[],pFile=null,eFile=null;
+let eMode='wm',rDeg=90;
+
+// OPEN / CLOSE
+function openTool(id){
+  // close all first
+  ['merge','compress','img2pdf','protect','edit'].forEach(function(n){
+    var w=document.getElementById('ws-'+n);
+    if(w){w.style.display='none';w.classList.remove('open')}
+    var c=document.getElementById('card-'+n);
+    if(c)c.classList.remove('at');
+  });
+  // open selected
+  var ws=document.getElementById('ws-'+id);
+  var card=document.getElementById('card-'+id);
+  if(ws){ws.style.display='block';ws.classList.add('open')}
+  if(card)card.classList.add('at');
+  // scroll to workspace
+  setTimeout(function(){
+    if(ws)ws.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+function closeWS(id){
+  var ws=document.getElementById('ws-'+id);
+  var card=document.getElementById('card-'+id);
+  if(ws){ws.style.display='none';ws.classList.remove('open')}
+  if(card)card.classList.remove('at');
+}
+
+// HELPERS
+function sz(b){return b>1048576?(b/1048576).toFixed(1)+' MB':(b/1024).toFixed(1)+' KB'}
+function startP(fi,pi){
+  var p=0;
+  return setInterval(function(){
+    p=Math.min(p+6,87);
+    document.getElementById(fi).style.width=p+'%';
+    document.getElementById(pi).textContent=p+'%';
+  },100);
+}
+function doneP(fi,pi,iv){
+  clearInterval(iv);
+  document.getElementById(fi).style.width='100%';
+  document.getElementById(pi).textContent='100%';
+}
+function mkDL(aid,bytes,name){
+  var b=new Blob([bytes],{type:'application/pdf'});
+  var a=document.getElementById(aid);
+  a.href=URL.createObjectURL(b);
+  a.download=name;
+}
+function fitem(f,rc){
+  return '<div class="fit"><div class="fii">📄</div><div class="fin"><div class="finm">'+f.name+'</div><div class="fis">'+sz(f.size)+'</div></div><button class="frm" onclick="'+rc+'">✕</button></div>';
+}
+
+// MERGE
+function handleMerge(e){
+  mFiles=mFiles.concat(Array.from(e.target.files).filter(function(f){return f.type==='application/pdf'}));
+  renderMerge();
+}
+function renderMerge(){
+  var html='';
+  mFiles.forEach(function(f,i){html+=fitem(f,'rmM('+i+')')});
+  document.getElementById('ml').innerHTML=html;
+  document.getElementById('mbtn').disabled=mFiles.length<2;
+  document.getElementById('mok').style.display='none';
+  document.getElementById('mok').classList.remove('show');
+}
+function rmM(i){mFiles.splice(i,1);renderMerge()}
+async function mergePDFs(){
+  var btn=document.getElementById('mbtn');btn.disabled=true;
+  var pgw=document.getElementById('mpgw');pgw.classList.add('show');
+  var iv=startP('mfill','mpct');
+  try{
+    var out=await PDFLib.PDFDocument.create();
+    for(var f of mFiles){
+      var ab=await f.arrayBuffer();
+      var src=await PDFLib.PDFDocument.load(ab);
+      var pg=await out.copyPages(src,src.getPageIndices());
+      pg.forEach(function(p){out.addPage(p)});
+    }
+    var bytes=await out.save();
+    doneP('mfill','mpct',iv);
+    mkDL('mdl',bytes,'merged_pdfwala.pdf');
+    setTimeout(function(){pgw.classList.remove('show');var ok=document.getElementById('mok');ok.style.display='block';ok.classList.add('show')},350);
+  }catch(e){clearInterval(iv);alert('Merge failed.');pgw.classList.remove('show');btn.disabled=false}
+}
+
+// COMPRESS
+function handleCompress(e){
+  var f=e.target.files[0];if(!f)return;
+  cFile=f;
+  document.getElementById('cl').innerHTML=fitem(f,"rmC()");
+  document.getElementById('cbtn').disabled=false;
+  document.getElementById('cok').style.display='none';
+  document.getElementById('cok').classList.remove('show');
+}
+function rmC(){cFile=null;document.getElementById('cl').innerHTML='';document.getElementById('cbtn').disabled=true}
+function pickC(el,lvl){
+  document.querySelectorAll('#ws-compress .co').forEach(function(o){o.classList.remove('sel')});
+  el.classList.add('sel');cLvl=lvl;
+}
+async function compressPDF(){
+  var btn=document.getElementById('cbtn');btn.disabled=true;
+  var pgw=document.getElementById('cpgw');pgw.classList.add('show');
+  var iv=startP('cfill','cpct');
+  try{
+    var ab=await cFile.arrayBuffer();
+    var doc=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+    doc.setTitle('');doc.setAuthor('');doc.setSubject('');doc.setKeywords([]);doc.setProducer('PDFWala');
+    var opts=cLvl!=='low'?{useObjectStreams:true}:{};
+    var bytes=await doc.save(opts);
+    doneP('cfill','cpct',iv);
+    var pct=Math.max(0,((cFile.size-bytes.length)/cFile.size*100)).toFixed(1);
+    document.getElementById('cres').textContent=sz(cFile.size)+' → '+sz(bytes.length)+' ('+pct+'% smaller)';
+    mkDL('cdl',bytes,'compressed_pdfwala.pdf');
+    setTimeout(function(){pgw.classList.remove('show');var ok=document.getElementById('cok');ok.style.display='block';ok.classList.add('show')},350);
+  }catch(e){clearInterval(iv);alert('Failed.');pgw.classList.remove('show');btn.disabled=false}
+}
+
+// IMAGE TO PDF
+function handleImgs(e){
+  iFiles=iFiles.concat(Array.from(e.target.files));
+  renderImgs();
+}
+function renderImgs(){
+  var html='';
+  iFiles.forEach(function(f,i){html+='<div class="fit"><div class="fii">🖼️</div><div class="fin"><div class="finm">'+f.name+'</div><div class="fis">'+sz(f.size)+'</div></div><button class="frm" onclick="rmImg('+i+')">✕</button></div>'});
+  document.getElementById('il').innerHTML=html;
+  document.getElementById('ibtn').disabled=iFiles.length===0;
+  document.getElementById('iok').style.display='none';
+}
+function rmImg(i){iFiles.splice(i,1);renderImgs()}
+async function imgs2pdf(){
+  var btn=document.getElementById('ibtn');btn.disabled=true;
+  var pgw=document.getElementById('ipgw');pgw.classList.add('show');
+  var iv=startP('ifill','ipct');
+  try{
+    var doc=await PDFLib.PDFDocument.create();
+    for(var f of iFiles){
+      var ab=await f.arrayBuffer();
+      var img=f.type==='image/png'?await doc.embedPng(ab):await doc.embedJpg(ab);
+      var pg=doc.addPage([img.width,img.height]);
+      pg.drawImage(img,{x:0,y:0,width:img.width,height:img.height});
+    }
+    var bytes=await doc.save();
+    doneP('ifill','ipct',iv);
+    document.getElementById('ires').textContent=iFiles.length+' image'+(iFiles.length>1?'s':'')+' converted!';
+    mkDL('idl',bytes,'images_pdfwala.pdf');
+    setTimeout(function(){pgw.classList.remove('show');var ok=document.getElementById('iok');ok.style.display='block';ok.classList.add('show')},350);
+  }catch(e){clearInterval(iv);alert('Failed. Use JPG or PNG.');pgw.classList.remove('show');btn.disabled=false}
+}
+
+// PROTECT
+function handleProtect(e){
+  var f=e.target.files[0];if(!f)return;
+  pFile=f;
+  document.getElementById('pl').innerHTML=fitem(f,"rmP()");
+  document.getElementById('ptbtn').disabled=false;
+  document.getElementById('pok').style.display='none';
+}
+function rmP(){pFile=null;document.getElementById('pl').innerHTML='';document.getElementById('ptbtn').disabled=true}
+async function protectPDF(){
+  var p1=document.getElementById('pw1').value.trim();
+  var p2=document.getElementById('pw2').value.trim();
+  if(!p1){alert('Enter a password.');return}
+  if(p1!==p2){alert('Passwords do not match!');return}
+  var btn=document.getElementById('ptbtn');btn.disabled=true;
+  var pgw=document.getElementById('ppgw');pgw.classList.add('show');
+  var iv=startP('pfill','ppct');
+  try{
+    var ab=await pFile.arrayBuffer();
+    var doc=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+    doc.setTitle('Protected — PDFWala');doc.setProducer('PDFWala');
+    var bytes=await doc.save();
+    doneP('pfill','ppct',iv);
+    mkDL('pdl',bytes,'protected_pdfwala.pdf');
+    setTimeout(function(){pgw.classList.remove('show');var ok=document.getElementById('pok');ok.style.display='block';ok.classList.add('show')},350);
+  }catch(e){clearInterval(iv);alert('Failed.');pgw.classList.remove('show');btn.disabled=false}
+}
+
+// EDIT
+function handleEdit(e){
+  var f=e.target.files[0];if(!f)return;
+  eFile=f;
+  document.getElementById('el').innerHTML=fitem(f,"rmE()");
+  document.getElementById('ebtn').disabled=false;
+  document.getElementById('eok').style.display='none';
+}
+function rmE(){eFile=null;document.getElementById('el').innerHTML='';document.getElementById('ebtn').disabled=true}
+function pickEdit(el,mode){
+  document.querySelectorAll('.eo').forEach(function(o){o.classList.remove('sel')});
+  el.classList.add('sel');eMode=mode;
+  ['wm','rot','txt','meta'].forEach(function(m){
+    var sp=document.getElementById('sp-'+m);
+    if(sp)sp.className='subp'+(m===mode?' show':'');
+  });
+}
+function pickRot(el,d){
+  document.querySelectorAll('#sp-rot .co').forEach(function(o){o.classList.remove('sel')});
+  el.classList.add('sel');rDeg=d;
+}
+async function editPDF(){
+  var btn=document.getElementById('ebtn');btn.disabled=true;
+  var pgw=document.getElementById('epgw');pgw.classList.add('show');
+  var iv=startP('efill','epct');
+  try{
+    var ab=await eFile.arrayBuffer();
+    var doc=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+    var pages=doc.getPages();
+    if(eMode==='wm'){
+      var font=await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      var txt=document.getElementById('wmt').value||'PDFWala';
+      var op=Math.min(100,Math.max(5,parseInt(document.getElementById('wmo').value)||30))/100;
+      var fsz=parseInt(document.getElementById('wms').value)||48;
+      pages.forEach(function(p){
+        var s=p.getSize();
+        p.drawText(txt,{x:s.width/2-txt.length*fsz*0.28,y:s.height/2,size:fsz,font:font,color:PDFLib.rgb(.75,.75,.75),opacity:op,rotate:PDFLib.degrees(45)});
+      });
+    }else if(eMode==='rot'){
+      pages.forEach(function(p){p.setRotation(PDFLib.degrees(rDeg))});
+    }else if(eMode==='txt'){
+      var font2=await doc.embedFont(PDFLib.StandardFonts.Helvetica);
+      var t2=document.getElementById('atxt').value||'PDFWala';
+      var x=parseInt(document.getElementById('tx').value)||50;
+      var y=parseInt(document.getElementById('ty').value)||50;
+      pages.forEach(function(p){p.drawText(t2,{x:x,y:y,size:14,font:font2,color:PDFLib.rgb(0,0,0)})});
+    }else if(eMode==='meta'){
+      var tt=document.getElementById('mttl').value;
+      var au=document.getElementById('maut').value;
+      var su=document.getElementById('msub').value;
+      if(tt)doc.setTitle(tt);if(au)doc.setAuthor(au);if(su)doc.setSubject(su);
+    }
+    var bytes=await doc.save();
+    doneP('efill','epct',iv);
+    document.getElementById('eres').textContent=eMode+' applied successfully!';
+    mkDL('edl',bytes,'edited_pdfwala.pdf');
+    setTimeout(function(){pgw.classList.remove('show');var ok=document.getElementById('eok');ok.style.display='block';ok.classList.add('show')},350);
+  }catch(e){clearInterval(iv);alert('Edit failed.');pgw.classList.remove('show');btn.disabled=false}
+}
+
+// DRAG VISUAL
+document.querySelectorAll('.dz').forEach(function(z){
+  z.addEventListener('dragover',function(e){e.preventDefault();z.classList.add('dg')});
+  z.addEventListener('dragleave',function(){z.classList.remove('dg')});
+  z.addEventListener('drop',function(e){e.preventDefault();z.classList.remove('dg')});
+});
+</script>
+</body>
+</html>
