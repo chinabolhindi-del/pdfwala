@@ -36,17 +36,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-links a:hover{color:var(--wh);background:var(--bg3)}
 @media(max-width:480px){.nav-links{display:none}}
 
-/* HERO */
-.hero{padding:108px 18px 52px;text-align:center;position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:460px;height:320px;background:radial-gradient(ellipse,var(--rg) 0%,transparent 68%);pointer-events:none;z-index:0}
-.hero>*{position:relative;z-index:1}
-.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.28);color:#ff8088;font-size:0.7rem;font-weight:600;padding:5px 13px;border-radius:100px;margin-bottom:20px;letter-spacing:.4px}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,8vw,4.5rem);font-weight:800;line-height:1.06;letter-spacing:-1.5px;color:var(--wh);margin-bottom:14px}
-.hero h1 em{color:var(--red);font-style:normal}
-.hero p{font-size:0.92rem;color:var(--mu);max-width:400px;margin:0 auto 32px;line-height:1.75;font-weight:300}
-.stats{display:flex;justify-content:center;gap:28px;padding-top:28px;border-top:1px solid var(--br);margin-top:40px}
-.s-num{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--wh)}
-.s-lbl{font-size:0.68rem;color:var(--mu);margin-top:2px}
+/* HERO - removed, now inline */
 
 /* SECTION */
 .sec{padding:44px 18px;max-width:1060px;margin:0 auto}
@@ -171,20 +161,7 @@ footer p{font-size:0.72rem;color:var(--mu)}
   </div>
 </nav>
 
-<section class="hero">
-  <div class="badge">⚡ 100% Free · No Sign Up · No Upload</div>
-  <h1>PDF Work,<br><em>Done in Seconds.</em></h1>
-  <p>Merge, compress, protect and edit PDFs right in your browser. Your files never leave your device.</p>
-  <div class="stats">
-    <div class="stat"><div class="s-num">10+</div><div class="s-lbl">PDF Tools</div></div>
-    <div class="stat"><div class="s-num">100%</div><div class="s-lbl">Free Forever</div></div>
-    <div class="stat"><div class="s-num">0</div><div class="s-lbl">Data Uploaded</div></div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section class="sec" id="tools">
+<section class="sec" id="tools" style="padding-top:76px">
   <div class="sec-lbl">All Tools</div>
   <div class="sec-ttl">What do you need?</div>
   <div class="tgrid">
@@ -280,4 +257,27 @@ footer p{font-size:0.72rem;color:var(--mu)}
     </div>
     <!-- Add Text -->
     <div class="subp" id="sp-txt">
-      <label class="lbl" style="margi
+      <label class="lbl" style="margin-top:14px">📝 Text to Stamp</label>
+      <input type="text" class="inp" id="atxt" placeholder="Text to add on every page...">
+      <div class="row2">
+        <div><label class="lbl" style="margin-top:10px">X (px)</label><input type="number" class="inp" id="tx" value="50"></div>
+        <div><label class="lbl" style="margin-top:10px">Y (px)</label><input type="number" class="inp" id="ty" value="50"></div>
+      </div>
+    </div>
+    <!-- Metadata -->
+    <div class="subp" id="sp-meta">
+      <label class="lbl" style="margin-top:14px">📋 Title</label><input type="text" class="inp" id="mttl" placeholder="Document title">
+      <label class="lbl" style="margin-top:10px">👤 Author</label><input type="text" class="inp" id="maut" placeholder="Author name">
+      <label class="lbl" style="margin-top:10px">📌 Subject</label><input type="text" class="inp" id="msub" placeholder="Subject">
+    </div>
+    <button class="pbtn" id="ebtn" onclick="editPDF()" disabled>✏️ Apply Edit</button>
+    <div class="pgw" id="epgw"><div class="pglbl"><span>Applying...</span><span id="epct">0%</span></div><div class="pgbar"><div class="pgfill" id="efill"></div></div></div>
+    <div class="sok" id="eok"><div class="ski">✅</div><p id="eres">Edited successfully!</p><a class="dlbtn" id="edl">⬇ Download Edited PDF</a></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HERO — moved below tools -->
+<section style="padding:40px 18px;text-align:center;background:var(--bg2);border-bottom:1px solid var(--br)">
+  <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.28);color:#ff8088;font-size:0.7rem;font-weight:600;padding:5px 13px;border
