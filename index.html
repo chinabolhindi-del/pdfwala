@@ -4,6 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>PDFWala — PDF Work, Done in Seconds</title>
+
+<!-- Google Verification -->
+<meta name="google-site-verification" content="LubG0BI4n98eBnpuc2ovMH0LxFYjAHPOlw1BkFTZNXU" />
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Free online PDF tools — merge, compress, protect, edit and convert PDF files instantly. No upload, no sign up. 100% free forever.">
+<meta name="keywords" content="PDF merge, PDF compress, PDF tools free, image to PDF, protect PDF, edit PDF, PDF online, free PDF converter">
+<meta name="author" content="PDFWala">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://chinabolhindi-del.github.io/pdfwala/">
+
+<!-- Open Graph (WhatsApp/Social share) -->
+<meta property="og:title" content="PDFWala — PDF Work, Done in Seconds">
+<meta property="og:description" content="Free online PDF tools. Merge, compress, protect, edit PDFs instantly. No sign up required.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chinabolhindi-del.github.io/pdfwala/">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <style>
@@ -264,192 +280,4 @@ footer p{font-size:0.72rem;color:var(--mu)}
     </div>
     <!-- Add Text -->
     <div class="subp" id="sp-txt">
-      <label class="lbl" style="margin-top:14px">📝 Text to Stamp</label>
-      <input type="text" class="inp" id="atxt" placeholder="Text to add on every page...">
-      <div class="row2">
-        <div><label class="lbl" style="margin-top:10px">X (px)</label><input type="number" class="inp" id="tx" value="50"></div>
-        <div><label class="lbl" style="margin-top:10px">Y (px)</label><input type="number" class="inp" id="ty" value="50"></div>
-      </div>
-    </div>
-    <!-- Metadata -->
-    <div class="subp" id="sp-meta">
-      <label class="lbl" style="margin-top:14px">📋 Title</label><input type="text" class="inp" id="mttl" placeholder="Document title">
-      <label class="lbl" style="margin-top:10px">👤 Author</label><input type="text" class="inp" id="maut" placeholder="Author name">
-      <label class="lbl" style="margin-top:10px">📌 Subject</label><input type="text" class="inp" id="msub" placeholder="Subject">
-    </div>
-    <button class="pbtn" id="ebtn" onclick="editPDF()" disabled>✏️ Apply Edit</button>
-    <div class="pgw" id="epgw"><div class="pglbl"><span>Applying...</span><span id="epct">0%</span></div><div class="pgbar"><div class="pgfill" id="efill"></div></div></div>
-    <div class="sok" id="eok"><div class="ski">✅</div><p id="eres">Edited successfully!</p><a class="dlbtn" id="edl">⬇ Download Edited PDF</a></div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section class="sec" id="how">
-  <div class="sec-lbl">Process</div>
-  <div class="sec-ttl">How It Works</div>
-  <div class="hgrid">
-    <div class="hc"><div class="hn">01</div><div class="ht">Pick a Tool</div><div class="hd">Choose from 10+ PDF tools. No account, no sign up ever.</div></div>
-    <div class="hc"><div class="hn">02</div><div class="ht">Upload File</div><div class="hd">Tap to select. All processing happens in your browser.</div></div>
-    <div class="hc"><div class="hn">03</div><div class="ht">Download</div><div class="hd">Get your result instantly. Zero data sent to any server.</div></div>
-  </div>
-</section>
-
-<footer>
-  <div class="logo">PDF<span>Wala</span></div>
-  <p>PDF Work, Done in Seconds — 100% Free, Always.</p>
-  <p>© 2024 PDFWala · No files uploaded to any server</p>
-</footer>
-
-<script>
-let mFiles=[],cFile=null,cLvl='low';
-let iFiles=[],pFile=null,eFile=null;
-let eMode='wm',rDeg=90;
-
-function openTool(id,card){
-  document.querySelectorAll('.ws').forEach(w=>w.classList.remove('show'));
-  document.querySelectorAll('.tc').forEach(c=>c.classList.remove('at'));
-  const ws=document.getElementById('ws-'+id);
-  if(ws){ws.classList.add('show');setTimeout(()=>ws.scrollIntoView({behavior:'smooth',block:'nearest'}),60)}
-  if(card)card.classList.add('at');
-}
-function closeTool(id){
-  document.getElementById('ws-'+id).classList.remove('show');
-  document.querySelectorAll('.tc').forEach(c=>c.classList.remove('at'));
-}
-function sz(b){return b>1048576?(b/1048576).toFixed(1)+' MB':(b/1024).toFixed(1)+' KB'}
-function ap(fi,pi,iv){clearInterval(iv);document.getElementById(fi).style.width='100%';document.getElementById(pi).textContent='100%'}
-function sp(fi,pi){let p=0;return setInterval(()=>{p=Math.min(p+6,87);document.getElementById(fi).style.width=p+'%';document.getElementById(pi).textContent=p+'%'},100)}
-function mkDL(aid,bytes,name){const b=new Blob([bytes],{type:'application/pdf'});const a=document.getElementById(aid);a.href=URL.createObjectURL(b);a.download=name}
-function fitem(f,rc){return`<div class="fit"><div class="fii">📄</div><div class="fin"><div class="finm">${f.name}</div><div class="fis">${sz(f.size)}</div></div><button class="frm" onclick="${rc}">✕</button></div>`}
-function iitem(f,i){return`<div class="fit"><div class="fii">🖼️</div><div class="fin"><div class="finm">${f.name}</div><div class="fis">${sz(f.size)}</div></div><button class="frm" onclick="rmImg(${i})">✕</button></div>`}
-
-// MERGE
-function handleMerge(e){mFiles=[...mFiles,...Array.from(e.target.files).filter(f=>f.type==='application/pdf')];rMerge()}
-function rMerge(){document.getElementById('ml').innerHTML=mFiles.map((f,i)=>fitem(f,`rmM(${i})`)).join('');document.getElementById('mbtn').disabled=mFiles.length<2;document.getElementById('mok').classList.remove('show')}
-function rmM(i){mFiles.splice(i,1);rMerge()}
-async function mergePDFs(){
-  const btn=document.getElementById('mbtn');btn.disabled=true;
-  document.getElementById('mpgw').classList.add('show');
-  const iv=sp('mfill','mpct');
-  try{
-    const{PDFDocument}=PDFLib;const out=await PDFDocument.create();
-    for(const f of mFiles){const ab=await f.arrayBuffer();const src=await PDFDocument.load(ab);const pg=await out.copyPages(src,src.getPageIndices());pg.forEach(p=>out.addPage(p))}
-    const bytes=await out.save();ap('mfill','mpct',iv);mkDL('mdl',bytes,'merged_pdfwala.pdf');
-    setTimeout(()=>{document.getElementById('mpgw').classList.remove('show');document.getElementById('mok').classList.add('show')},350);
-  }catch(e){clearInterval(iv);alert('Merge failed. Use valid PDF files.');document.getElementById('mpgw').classList.remove('show');btn.disabled=false}
-}
-
-// COMPRESS
-function handleCompress(e){const f=e.target.files[0];if(!f)return;cFile=f;document.getElementById('cl').innerHTML=fitem(f,"rmC()");document.getElementById('cbtn').disabled=false;document.getElementById('cok').classList.remove('show')}
-function rmC(){cFile=null;document.getElementById('cl').innerHTML='';document.getElementById('cbtn').disabled=true}
-function pickC(el,lvl){document.querySelectorAll('#ws-compress .co').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');cLvl=lvl}
-async function compressPDF(){
-  const btn=document.getElementById('cbtn');btn.disabled=true;
-  document.getElementById('cpgw').classList.add('show');
-  const iv=sp('cfill','cpct');
-  try{
-    const{PDFDocument}=PDFLib;const ab=await cFile.arrayBuffer();const doc=await PDFDocument.load(ab,{ignoreEncryption:true});
-    doc.setTitle('');doc.setAuthor('');doc.setSubject('');doc.setKeywords([]);doc.setProducer('PDFWala');doc.setCreator('PDFWala');
-    const opts=cLvl!=='low'?{useObjectStreams:true}:{};
-    const bytes=await doc.save(opts);ap('cfill','cpct',iv);
-    const pct=Math.max(0,((cFile.size-bytes.length)/cFile.size*100)).toFixed(1);
-    document.getElementById('cres').textContent=`${sz(cFile.size)} → ${sz(bytes.length)} (${pct}% smaller)`;
-    mkDL('cdl',bytes,'compressed_pdfwala.pdf');
-    setTimeout(()=>{document.getElementById('cpgw').classList.remove('show');document.getElementById('cok').classList.add('show')},350);
-  }catch(e){clearInterval(iv);alert('Compression failed.');document.getElementById('cpgw').classList.remove('show');btn.disabled=false}
-}
-
-// IMAGE TO PDF
-function handleImgs(e){iFiles=[...iFiles,...Array.from(e.target.files)];rImgs()}
-function rImgs(){document.getElementById('il').innerHTML=iFiles.map((f,i)=>iitem(f,i)).join('');document.getElementById('ibtn').disabled=iFiles.length===0;document.getElementById('iok').classList.remove('show')}
-function rmImg(i){iFiles.splice(i,1);rImgs()}
-async function imgs2pdf(){
-  const btn=document.getElementById('ibtn');btn.disabled=true;
-  document.getElementById('ipgw').classList.add('show');
-  const iv=sp('ifill','ipct');
-  try{
-    const{PDFDocument}=PDFLib;const doc=await PDFDocument.create();
-    for(const f of iFiles){
-      const ab=await f.arrayBuffer();
-      let img=f.type==='image/png'?await doc.embedPng(ab):await doc.embedJpg(ab);
-      const pg=doc.addPage([img.width,img.height]);
-      pg.drawImage(img,{x:0,y:0,width:img.width,height:img.height});
-    }
-    const bytes=await doc.save();ap('ifill','ipct',iv);
-    document.getElementById('ires').textContent=`${iFiles.length} image${iFiles.length>1?'s':''} converted to PDF!`;
-    mkDL('idl',bytes,'images_pdfwala.pdf');
-    setTimeout(()=>{document.getElementById('ipgw').classList.remove('show');document.getElementById('iok').classList.add('show')},350);
-  }catch(e){clearInterval(iv);alert('Conversion failed. Use JPG or PNG.');document.getElementById('ipgw').classList.remove('show');btn.disabled=false}
-}
-
-// PROTECT
-function handleProtect(e){const f=e.target.files[0];if(!f)return;pFile=f;document.getElementById('pl').innerHTML=fitem(f,"rmP()");document.getElementById('pbtn2').disabled=false;document.getElementById('pok').classList.remove('show')}
-function rmP(){pFile=null;document.getElementById('pl').innerHTML='';document.getElementById('pbtn2').disabled=true}
-async function protectPDF(){
-  const p1=document.getElementById('pw1').value.trim();
-  const p2=document.getElementById('pw2').value.trim();
-  if(!p1){alert('Please enter a password.');return}
-  if(p1!==p2){alert('Passwords do not match!');return}
-  const btn=document.getElementById('pbtn2');btn.disabled=true;
-  document.getElementById('ppgw').classList.add('show');
-  const iv=sp('pfill','ppct');
-  try{
-    const{PDFDocument}=PDFLib;const ab=await pFile.arrayBuffer();const doc=await PDFDocument.load(ab,{ignoreEncryption:true});
-    doc.setTitle('Protected — PDFWala');doc.setProducer('PDFWala');doc.setCreator('PDFWala');
-    const bytes=await doc.save();ap('pfill','ppct',iv);
-    mkDL('pdl',bytes,'protected_pdfwala.pdf');
-    setTimeout(()=>{document.getElementById('ppgw').classList.remove('show');document.getElementById('pok').classList.add('show')},350);
-  }catch(e){clearInterval(iv);alert('Protection failed.');document.getElementById('ppgw').classList.remove('show');btn.disabled=false}
-}
-
-// EDIT
-function handleEdit(e){const f=e.target.files[0];if(!f)return;eFile=f;document.getElementById('el').innerHTML=fitem(f,"rmE()");document.getElementById('ebtn').disabled=false;document.getElementById('eok').classList.remove('show')}
-function rmE(){eFile=null;document.getElementById('el').innerHTML='';document.getElementById('ebtn').disabled=true}
-function pickEdit(el,mode){
-  document.querySelectorAll('.eo').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');eMode=mode;
-  ['wm','rot','txt','meta'].forEach(m=>document.getElementById('sp-'+m).classList.toggle('show',m===mode));
-}
-function pickRot(el,d){document.querySelectorAll('#sp-rot .co').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');rDeg=d}
-async function editPDF(){
-  const btn=document.getElementById('ebtn');btn.disabled=true;
-  document.getElementById('epgw').classList.add('show');
-  const iv=sp('efill','epct');
-  try{
-    const{PDFDocument,rgb,StandardFonts,degrees}=PDFLib;
-    const ab=await eFile.arrayBuffer();const doc=await PDFDocument.load(ab,{ignoreEncryption:true});
-    const pages=doc.getPages();
-    if(eMode==='wm'){
-      const font=await doc.embedFont(StandardFonts.HelveticaBold);
-      const txt=document.getElementById('wmt').value||'PDFWala';
-      const op=Math.min(100,Math.max(5,parseInt(document.getElementById('wmo').value)||30))/100;
-      const sz2=parseInt(document.getElementById('wms').value)||48;
-      pages.forEach(p=>{const{width,height}=p.getSize();p.drawText(txt,{x:width/2-txt.length*sz2*0.28,y:height/2,size:sz2,font,color:rgb(.75,.75,.75),opacity:op,rotate:degrees(45)})});
-    } else if(eMode==='rot'){
-      pages.forEach(p=>p.setRotation(degrees(rDeg)));
-    } else if(eMode==='txt'){
-      const font=await doc.embedFont(StandardFonts.Helvetica);
-      const txt=document.getElementById('atxt').value||'PDFWala';
-      const x=parseInt(document.getElementById('tx').value)||50;
-      const y=parseInt(document.getElementById('ty').value)||50;
-      pages.forEach(p=>p.drawText(txt,{x,y,size:14,font,color:rgb(0,0,0)}));
-    } else if(eMode==='meta'){
-      const t=document.getElementById('mttl').value;const a=document.getElementById('maut').value;const s=document.getElementById('msub').value;
-      if(t)doc.setTitle(t);if(a)doc.setAuthor(a);if(s)doc.setSubject(s);
-    }
-    const bytes=await doc.save();ap('efill','epct',iv);
-    document.getElementById('eres').textContent=`${eMode==='wm'?'Watermark':'Edit'} applied successfully!`;
-    mkDL('edl',bytes,'edited_pdfwala.pdf');
-    setTimeout(()=>{document.getElementById('epgw').classList.remove('show');document.getElementById('eok').classList.add('show')},350);
-  }catch(e){clearInterval(iv);alert('Edit failed. Use a valid PDF.');document.getElementById('epgw').classList.remove('show');btn.disabled=false}
-}
-
-// Drag visual
-document.querySelectorAll('.dz').forEach(z=>{
-  z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('dg')});
-  z.addEventListener('dragleave',()=>z.classList.remove('dg'));
-  z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('dg')});
-});
-</script>
-</body>
-</html>
+      <label class="lbl" style="margi
