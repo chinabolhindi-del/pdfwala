@@ -2,273 +2,158 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>PDFWala — PDF Work, Done in Seconds</title>
-<meta name="google-site-verification" content="LubG0BI4n98eBnpuc2ovMH0LxFYjAHPOlw1BkFTZNXU" />
-<meta name="description" content="Free online PDF tools — merge, compress, protect, edit and convert PDF files instantly. No upload, no sign up. 100% free forever.">
-<meta name="keywords" content="PDF merge, PDF compress, PDF tools free, image to PDF, protect PDF, edit PDF, PDF online, free PDF converter">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://chinabolhindi-del.github.io/pdfwala/">
-<meta property="og:title" content="PDFWala — PDF Work, Done in Seconds">
-<meta property="og:description" content="Free online PDF tools. Merge, compress, protect, edit PDFs instantly. No sign up required.">
-<meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDFWala Lite</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
 <style>
-:root{--red:#E63946;--rd:#c1121f;--rg:rgba(230,57,70,0.16);--bg:#090909;--bg2:#121212;--bg3:#1c1c1c;--br:#252525;--tx:#efefef;--mu:#777;--wh:#fff}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;font-size:15px}
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#0d0d0d;
+  color:#fff;
+  text-align:center;
+}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:rgba(9,9,9,0.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--br)}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;color:var(--wh);letter-spacing:-.5px}
-.logo span{color:var(--red)}
-.nav-links{display:flex;gap:4px}
-.nav-links a{color:var(--mu);text-decoration:none;font-size:0.76rem;font-weight:500;padding:5px 10px;border-radius:7px;transition:all .2s}
-.nav-links a:hover{color:var(--wh);background:var(--bg3)}
-@media(max-width:480px){.nav-links{display:none}}
+h1{margin-top:20px}
+.container{padding:15px}
 
-/* HERO */
-.hero{padding:100px 18px 44px;text-align:center;position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:420px;height:300px;background:radial-gradient(ellipse,var(--rg) 0%,transparent 68%);pointer-events:none;z-index:0}
-.hero>*{position:relative;z-index:1}
-.badge{display:inline-flex;align-items:center;gap:5px;background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.28);color:#ff8088;font-size:0.68rem;font-weight:600;padding:4px 12px;border-radius:100px;margin-bottom:16px;letter-spacing:.4px}
-.hero h1{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;line-height:1.08;letter-spacing:-1px;color:var(--wh);margin-bottom:12px}
-.hero h1 em{color:var(--red);font-style:normal;display:block}
-.hero p{font-size:0.88rem;color:var(--mu);max-width:360px;margin:0 auto 28px;line-height:1.7;font-weight:300}
-.stats{display:flex;justify-content:center;gap:24px;padding-top:22px;border-top:1px solid var(--br);margin-top:32px}
-.s-num{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--wh)}
-.s-lbl{font-size:0.65rem;color:var(--mu);margin-top:2px}
+.btn{
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:15px;
+  border:none;
+  border-radius:10px;
+  background:#e63946;
+  color:#fff;
+  font-size:16px;
+}
 
-/* SECTION */
-.sec{padding:36px 18px;max-width:1060px;margin:0 auto}
-.sec-lbl{font-size:0.65rem;font-weight:700;letter-spacing:2.5px;color:var(--red);text-transform:uppercase;margin-bottom:8px}
-.sec-ttl{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--wh);margin-bottom:22px;letter-spacing:-.5px}
-.divider{height:1px;background:var(--br)}
+.card{
+  background:#1c1c1c;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
+  display:none;
+}
 
-/* TOOLS GRID */
-.tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-@media(min-width:580px){.tgrid{grid-template-columns:repeat(3,1fr)}}
-@media(min-width:860px){.tgrid{grid-template-columns:repeat(4,1fr)}}
+.card.active{display:block}
 
-.tc{background:var(--bg2);border:1px solid var(--br);border-radius:12px;padding:15px 13px;cursor:pointer;position:relative;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation}
-.tc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transition:transform .2s;transform-origin:left}
-.tc:hover::before,.tc.at::before{transform:scaleX(1)}
-.tc:hover,.tc.at{border-color:rgba(230,57,70,.4);background:var(--bg3)}
-.tc.dis{opacity:.38;pointer-events:none}
-.ti{width:36px;height:36px;background:var(--rg);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:9px}
-.tn{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--wh);margin-bottom:2px}
-.td{font-size:0.68rem;color:var(--mu);line-height:1.4}
-.tbg{display:inline-block;font-size:0.57rem;font-weight:700;padding:2px 7px;border-radius:100px;margin-top:6px;letter-spacing:.4px}
-.tbg.r{background:rgba(230,57,70,.15);color:#ff8088}
-.tbg.s{background:rgba(255,255,255,.05);color:#444}
+input{margin-top:10px}
 
-/* WORKSPACE */
-.ws{display:none;background:var(--bg2);border:1px solid var(--br);border-radius:14px;padding:20px 16px;margin-top:16px}
-.ws.open{display:block !important}
-.wsh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.wsttl{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--wh)}
-.xbtn{width:30px;height:30px;border-radius:7px;background:var(--bg3);border:1px solid var(--br);color:var(--mu);font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;touch-action:manipulation}
-.xbtn:hover{color:var(--wh);border-color:var(--red)}
-
-/* DROP ZONE */
-.dz{border:2px dashed var(--br);border-radius:12px;padding:28px 14px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.dz:hover,.dz.dg{border-color:var(--red);background:rgba(230,57,70,.04)}
-.dz input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:100px;touch-action:manipulation}
-.di{font-size:1.8rem;display:block;margin-bottom:7px}
-.dttl{font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:700;color:var(--wh);margin-bottom:2px}
-.dsub{font-size:0.68rem;color:var(--mu)}
-
-/* FILE LIST */
-.fl{margin-top:11px;display:flex;flex-direction:column;gap:6px}
-.fit{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--br);border-radius:8px;padding:8px 11px}
-.fii{font-size:1.1rem;flex-shrink:0}
-.fin{flex:1;min-width:0}
-.finm{font-size:0.78rem;font-weight:500;color:var(--wh);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fis{font-size:0.65rem;color:var(--mu);margin-top:1px}
-.frm{background:none;border:none;color:var(--mu);cursor:pointer;font-size:0.82rem;padding:3px 5px;border-radius:5px;flex-shrink:0;transition:all .2s;touch-action:manipulation}
-.frm:hover{color:var(--red)}
-
-/* COMPRESS OPTS */
-.copts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
-.co{background:var(--bg3);border:2px solid var(--br);border-radius:10px;padding:11px 7px;text-align:center;cursor:pointer;transition:all .2s;touch-action:manipulation}
-.co:hover,.co.sel{border-color:var(--red);background:rgba(230,57,70,.07)}
-.coi{font-size:1.2rem;margin-bottom:4px}
-.con{font-family:'Syne',sans-serif;font-size:0.76rem;font-weight:700;color:var(--wh);margin-bottom:2px}
-.cod{font-size:0.63rem;color:var(--mu)}
-
-/* INPUTS */
-.lbl{font-size:0.73rem;color:var(--mu);margin-bottom:6px;display:block;font-weight:500}
-.inp{width:100%;background:var(--bg3);border:1px solid var(--br);border-radius:8px;padding:10px 12px;color:var(--wh);font-size:0.86rem;font-family:'DM Sans',sans-serif;outline:none;transition:border .2s}
-.inp:focus{border-color:var(--red)}
-.inp::placeholder{color:#444}
-.igroup{margin-top:13px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
-
-/* EDIT OPTS */
-.eopts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:13px}
-.eo{background:var(--bg3);border:2px solid var(--br);border-radius:10px;padding:11px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;touch-action:manipulation}
-.eo:hover,.eo.sel{border-color:var(--red);background:rgba(230,57,70,.07)}
-.eoi{font-size:1.1rem;flex-shrink:0}
-.eon{font-family:'Syne',sans-serif;font-size:0.76rem;font-weight:700;color:var(--wh)}
-.eod{font-size:0.63rem;color:var(--mu);margin-top:1px}
-.subp{display:none;margin-top:13px}
-.subp.show{display:block}
-
-/* PROCESS BTN */
-.pbtn{width:100%;margin-top:15px;padding:13px;background:var(--red);color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;touch-action:manipulation}
-.pbtn:hover{background:var(--rd)}
-.pbtn:disabled{opacity:.4;cursor:not-allowed}
-
-/* PROGRESS */
-.pgw{display:none;margin-top:13px}
-.pgw.show{display:block}
-.pglbl{font-size:0.7rem;color:var(--mu);margin-bottom:5px;display:flex;justify-content:space-between}
-.pgbar{height:4px;background:var(--br);border-radius:100px;overflow:hidden}
-.pgfill{height:100%;background:var(--red);border-radius:100px;transition:width .3s;width:0}
-
-/* SUCCESS */
-.sok{display:none;margin-top:13px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.22);border-radius:12px;padding:16px;text-align:center}
-.sok.show{display:block}
-.ski{font-size:1.6rem;margin-bottom:6px}
-.sok p{font-size:0.8rem;color:#86efac;margin-bottom:11px;line-height:1.5}
-.dlbtn{display:inline-flex;align-items:center;gap:5px;background:#22c55e;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;touch-action:manipulation}
-.dlbtn:hover{background:#16a34a}
-
-/* HOW */
-.hgrid{display:grid;grid-template-columns:1fr;gap:11px}
-@media(min-width:580px){.hgrid{grid-template-columns:repeat(3,1fr)}}
-.hc{background:var(--bg2);border:1px solid var(--br);border-radius:12px;padding:20px 16px}
-.hn{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:rgba(230,57,70,.13);line-height:1;margin-bottom:10px}
-.ht{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--wh);margin-bottom:4px}
-.hd{font-size:0.73rem;color:var(--mu);line-height:1.6}
-
-/* FOOTER */
-footer{border-top:1px solid var(--br);padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;margin-top:24px}
-footer .logo{font-size:1rem}
-footer p{font-size:0.7rem;color:var(--mu)}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="logo">PDF<span>Wala</span></div>
-  <div class="nav-links">
-    <a href="#tools">Tools</a>
-    <a href="#how">How It Works</a>
-  </div>
-</nav>
+<h1>PDFWala ⚡</h1>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="badge">⚡ 100% Free · No Sign Up · No Server Upload</div>
-  <h1>PDF Work,<br><em>Done in Seconds.</em></h1>
-  <p>Merge, compress, protect and edit PDFs in your browser. Your files never leave your device.</p>
-  <div class="stats">
-    <div><div class="s-num">10+</div><div class="s-lbl">PDF Tools</div></div>
-    <div><div class="s-num">100%</div><div class="s-lbl">Free Forever</div></div>
-    <div><div class="s-num">0</div><div class="s-lbl">Data Uploaded</div></div>
-  </div>
-</section>
+<div class="container">
 
-<div class="divider"></div>
+<button class="btn" onclick="openTool('merge')">Merge PDF</button>
+<button class="btn" onclick="openTool('img')">Image to PDF</button>
 
-<!-- TOOLS -->
-<section class="sec" id="tools">
-  <div class="sec-lbl">All Tools</div>
-  <div class="sec-ttl">What do you need?</div>
-  <div class="tgrid">
-    <div class="tc" id="card-merge" onclick="openTool('merge')"><div class="ti">🔗</div><div class="tn">Merge PDF</div><div class="td">Combine multiple PDFs into one</div><span class="tbg r">READY</span></div>
-    <div class="tc" id="card-compress" onclick="openTool('compress')"><div class="ti">🗜️</div><div class="tn">Compress PDF</div><div class="td">Reduce size, keep quality</div><span class="tbg r">READY</span></div>
-    <div class="tc" id="card-img2pdf" onclick="openTool('img2pdf')"><div class="ti">🖼️</div><div class="tn">Image to PDF</div><div class="td">Convert JPG/PNG to PDF</div><span class="tbg r">READY</span></div>
-    <div class="tc" id="card-protect" onclick="openTool('protect')"><div class="ti">🔒</div><div class="tn">Protect PDF</div><div class="td">Add password to your PDF</div><span class="tbg r">READY</span></div>
-    <div class="tc" id="card-edit" onclick="openTool('edit')"><div class="ti">✏️</div><div class="tn">Edit PDF</div><div class="td">Watermark, rotate, add text</div><span class="tbg r">READY</span></div>
-    <div class="tc dis"><div class="ti">✂️</div><div class="tn">Split PDF</div><div class="td">Extract specific pages</div><span class="tbg s">COMING SOON</span></div>
-    <div class="tc dis"><div class="ti">🔓</div><div class="tn">Unlock PDF</div><div class="td">Remove PDF password</div><span class="tbg s">COMING SOON</span></div>
-    <div class="tc dis"><div class="ti">📄</div><div class="tn">PDF to Word</div><div class="td">Convert to editable doc</div><span class="tbg s">COMING SOON</span></div>
-  </div>
+<!-- MERGE -->
+<div id="merge" class="card">
+  <h3>Select PDFs</h3>
+  <input type="file" multiple accept="application/pdf" onchange="loadMerge(event)">
+  <button class="btn" onclick="mergePDF()">Merge</button>
+  <a id="mergeDownload"></a>
+</div>
 
-  <!-- WORKSPACES -->
-  <div class="ws" id="ws-merge">
-    <div class="wsh"><div class="wsttl">🔗 Merge PDF</div><button class="xbtn" onclick="closeWS('merge')">✕</button></div>
-    <div class="dz"><input type="file" accept=".pdf" multiple onchange="handleMerge(event)"><span class="di">📂</span><div class="dttl">Tap to select PDF files</div><div class="dsub">Select 2 or more PDFs</div></div>
-    <div class="fl" id="ml"></div>
-    <button class="pbtn" id="mbtn" onclick="mergePDFs()" disabled>🔗 Merge PDFs</button>
-    <div class="pgw" id="mpgw"><div class="pglbl"><span>Merging...</span><span id="mpct">0%</span></div><div class="pgbar"><div class="pgfill" id="mfill"></div></div></div>
-    <div class="sok" id="mok"><div class="ski">✅</div><p>Merged successfully!</p><a class="dlbtn" id="mdl">⬇ Download</a></div>
-  </div>
+<!-- IMG -->
+<div id="img" class="card">
+  <h3>Select Images</h3>
+  <input type="file" multiple accept="image/png,image/jpeg" onchange="loadImg(event)">
+  <button class="btn" onclick="imgToPDF()">Convert</button>
+  <a id="imgDownload"></a>
+</div>
 
-  <div class="ws" id="ws-compress">
-    <div class="wsh"><div class="wsttl">🗜️ Compress PDF</div><button class="xbtn" onclick="closeWS('compress')">✕</button></div>
-    <div class="dz"><input type="file" accept=".pdf" onchange="handleCompress(event)"><span class="di">📂</span><div class="dttl">Tap to select a PDF</div><div class="dsub">We'll reduce the file size</div></div>
-    <div class="fl" id="cl"></div>
-    <div class="copts">
-      <div class="co sel" onclick="pickC(this,'low')"><div class="coi">🟢</div><div class="con">Low</div><div class="cod">Max quality</div></div>
-      <div class="co" onclick="pickC(this,'medium')"><div class="coi">🟡</div><div class="con">Medium</div><div class="cod">Balanced</div></div>
-      <div class="co" onclick="pickC(this,'high')"><div class="coi">🔴</div><div class="con">High</div><div class="cod">Smallest</div></div>
-    </div>
-    <button class="pbtn" id="cbtn" onclick="compressPDF()" disabled>🗜️ Compress PDF</button>
-    <div class="pgw" id="cpgw"><div class="pglbl"><span>Compressing...</span><span id="cpct">0%</span></div><div class="pgbar"><div class="pgfill" id="cfill"></div></div></div>
-    <div class="sok" id="cok"><div class="ski">✅</div><p id="cres">Compressed!</p><a class="dlbtn" id="cdl">⬇ Download</a></div>
-  </div>
+</div>
 
-  <div class="ws" id="ws-img2pdf">
-    <div class="wsh"><div class="wsttl">🖼️ Image to PDF</div><button class="xbtn" onclick="closeWS('img2pdf')">✕</button></div>
-    <div class="dz"><input type="file" accept="image/jpeg,image/png,image/webp" multiple onchange="handleImgs(event)"><span class="di">🖼️</span><div class="dttl">Tap to select images</div><div class="dsub">JPG, PNG, WEBP · Multiple allowed</div></div>
-    <div class="fl" id="il"></div>
-    <button class="pbtn" id="ibtn" onclick="imgs2pdf()" disabled>🖼️ Convert to PDF</button>
-    <div class="pgw" id="ipgw"><div class="pglbl"><span>Converting...</span><span id="ipct">0%</span></div><div class="pgbar"><div class="pgfill" id="ifill"></div></div></div>
-    <div class="sok" id="iok"><div class="ski">✅</div><p id="ires">Converted!</p><a class="dlbtn" id="idl">⬇ Download</a></div>
-  </div>
+<script>
 
-  <div class="ws" id="ws-protect">
-    <div class="wsh"><div class="wsttl">🔒 Protect PDF</div><button class="xbtn" onclick="closeWS('protect')">✕</button></div>
-    <div class="dz"><input type="file" accept=".pdf" onchange="handleProtect(event)"><span class="di">📄</span><div class="dttl">Tap to select a PDF</div><div class="dsub">We'll add password protection</div></div>
-    <div class="fl" id="pl"></div>
-    <div class="igroup">
-      <label class="lbl">🔑 Set Password</label>
-      <input type="password" class="inp" id="pw1" placeholder="Enter a strong password...">
-      <label class="lbl" style="margin-top:10px">🔑 Confirm Password</label>
-      <input type="password" class="inp" id="pw2" placeholder="Re-enter password...">
-    </div>
-    <button class="pbtn" id="ptbtn" onclick="protectPDF()" disabled>🔒 Protect PDF</button>
-    <div class="pgw" id="ppgw"><div class="pglbl"><span>Adding protection...</span><span id="ppct">0%</span></div><div class="pgbar"><div class="pgfill" id="pfill"></div></div></div>
-    <div class="sok" id="pok"><div class="ski">✅</div><p>PDF protected!</p><a class="dlbtn" id="pdl">⬇ Download</a></div>
-  </div>
+// TOOL SWITCH
+function openTool(id){
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+}
 
-  <div class="ws" id="ws-edit">
-    <div class="wsh"><div class="wsttl">✏️ Edit PDF</div><button class="xbtn" onclick="closeWS('edit')">✕</button></div>
-    <div class="dz"><input type="file" accept=".pdf" onchange="handleEdit(event)"><span class="di">📄</span><div class="dttl">Tap to select a PDF</div><div class="dsub">Choose an operation below</div></div>
-    <div class="fl" id="el"></div>
-    <div class="eopts">
-      <div class="eo sel" onclick="pickEdit(this,'wm')"><div class="eoi">💧</div><div><div class="eon">Watermark</div><div class="eod">Add text watermark</div></div></div>
-      <div class="eo" onclick="pickEdit(this,'rot')"><div class="eoi">🔄</div><div><div class="eon">Rotate Pages</div><div class="eod">90°/180°/270°</div></div></div>
-      <div class="eo" onclick="pickEdit(this,'txt')"><div class="eoi">📝</div><div><div class="eon">Add Text</div><div class="eod">Stamp on pages</div></div></div>
-      <div class="eo" onclick="pickEdit(this,'meta')"><div class="eoi">🏷️</div><div><div class="eon">Metadata</div><div class="eod">Title, author</div></div></div>
-    </div>
-    <div class="subp show" id="sp-wm">
-      <label class="lbl" style="margin-top:13px">💧 Watermark Text</label>
-      <input type="text" class="inp" id="wmt" placeholder="e.g. CONFIDENTIAL...">
-      <div class="row2">
-        <div><label class="lbl" style="margin-top:9px">Opacity (5–100)</label><input type="number" class="inp" id="wmo" value="30" min="5" max="100"></div>
-        <div><label class="lbl" style="margin-top:9px">Font Size</label><input type="number" class="inp" id="wms" value="48" min="12" max="120"></div>
-      </div>
-    </div>
-    <div class="subp" id="sp-rot">
-      <label class="lbl" style="margin-top:13px">🔄 Rotation</label>
-      <div class="copts">
-        <div class="co sel" onclick="pickRot(this,90)"><div class="coi">↻</div><div class="con">90°</div></div>
-        <div class="co" onclick="pickRot(this,180)"><div class="coi">↺↻</div><div class="con">180°</div></div>
-        <div class="co" onclick="pickRot(this,270)"><div class="coi">↺</div><div class="con">270°</div></div>
-      </div>
-    </div>
-    <div class="subp" id="sp-txt">
-      <label class="lbl" style="margin-top:13px">📝 Text to Stamp</label>
-      <input type="text" class="inp" id="atxt" placeholder="Text for every page...">
-      <div class="row2">
-        <div><label class="lbl" style="margin-top:9px">X (px)</label><input type="number" class="inp" id="tx" value="50"></div>
-        <div><label class="lbl" style="margin-top:9px">Y (px)</label><input type="number" class="inp" id="ty" value="50"></div>
-      </div>
-    </div>
-    <div class="subp" id="sp-meta">
-      <label class="lbl" style="margin-top:13px">📋 Title</label><input type="text" class="inp" id="mttl" place
+// DATA
+let mergeFiles=[]
+let imgFiles=[]
+
+// LOAD FILES
+function loadMerge(e){
+  mergeFiles = Array.from(e.target.files)
+}
+
+function loadImg(e){
+  imgFiles = Array.from(e.target.files)
+}
+
+// MERGE
+async function mergePDF(){
+  if(mergeFiles.length < 2){
+    alert("Select at least 2 PDFs")
+    return
+  }
+
+  const pdfDoc = await PDFLib.PDFDocument.create()
+
+  for(let file of mergeFiles){
+    const bytes = await file.arrayBuffer()
+    const pdf = await PDFLib.PDFDocument.load(bytes)
+    const pages = await pdfDoc.copyPages(pdf, pdf.getPageIndices())
+    pages.forEach(p => pdfDoc.addPage(p))
+  }
+
+  const merged = await pdfDoc.save()
+  const blob = new Blob([merged], {type:'application/pdf'})
+
+  const link = document.getElementById("mergeDownload")
+  link.href = URL.createObjectURL(blob)
+  link.download = "merged.pdf"
+  link.innerText = "⬇ Download Merged PDF"
+}
+
+// IMG TO PDF
+async function imgToPDF(){
+  if(imgFiles.length === 0){
+    alert("Select images")
+    return
+  }
+
+  const pdfDoc = await PDFLib.PDFDocument.create()
+
+  for(let file of imgFiles){
+    const bytes = await file.arrayBuffer()
+
+    let img
+    if(file.type === "image/png"){
+      img = await pdfDoc.embedPng(bytes)
+    }else{
+      img = await pdfDoc.embedJpg(bytes)
+    }
+
+    const page = pdfDoc.addPage([img.width, img.height])
+    page.drawImage(img,{
+      x:0,y:0,width:img.width,height:img.height
+    })
+  }
+
+  const pdfBytes = await pdfDoc.save()
+  const blob = new Blob([pdfBytes], {type:'application/pdf'})
+
+  const link = document.getElementById("imgDownload")
+  link.href = URL.createObjectURL(blob)
+  link.download = "images.pdf"
+  link.innerText = "⬇ Download PDF"
+}
+
+</script>
+
+</body>
+</html>
